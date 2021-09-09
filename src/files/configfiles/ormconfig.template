@@ -1,0 +1,12 @@
+{
+	"type": "{{type}}",
+	"host": "{{host}}",
+	"port": {{port}},
+	"username": "{{username}}",
+	"password": "{{password}}",
+	"database": "{{database}}",
+	"synchronize": false,
+	"logging": true,
+	"entities": ["dist/entities/**/*.js"],
+	"migrations": ["dist/dataAccess/migrations/**/*.js"]
+}

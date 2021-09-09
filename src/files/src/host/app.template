@@ -1,0 +1,40 @@
+import express from "express";
+import { AuthService } from "../services/authService";
+{{#withGraphql}}
+import graphqlApi from "./graphql";
+{{/withGraphql}}
+{{#withRest}}
+import restApi from "./restApi";
+{{/withRest}}
+import auth from "./auth";
+import cors from "cors";
+
+const createApp = async (port: number) => {
+	const app = express();
+	const authService = new AuthService();
+
+	const corsHost = process.env.CORS_CLIENT_HOST;
+	if (corsHost) {
+		app.use(
+			cors({
+				origin: corsHost,
+				credentials: true,
+			})
+		);
+	}
+
+	await auth(app, authService);
+	{{#withGraphql}}
+	await graphqlApi(app, authService);
+	{{/withGraphql}}
+	{{#withRest}}
+	await restApi(app, authService);
+	{{/withRest}}
+
+	app.listen(port, () => {
+		console.log("server listens on ", port);
+	});
+
+	return app;
+};
+export default createApp;

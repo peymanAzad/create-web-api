@@ -1,0 +1,31 @@
+{{#withgraphql}}
+import { Field, ObjectType } from "type-graphql";
+{{/withgraphql}}
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity()
+{{#withgraphql}}
+@ObjectType()
+{{/withgraphql}}
+export class User extends BaseEntity {
+    {{#withgraphql}}
+	@Field()
+    {{/withgraphql}}
+    @PrimaryGeneratedColumn()
+	
+	id!: number;
+
+    {{#withgraphql}}
+	@Field()
+    {{/withgraphql}}
+	@Column({ unique: true })
+	username!: string;
+
+	@Column()
+	password!: string;
+    {{#withgraphql}}
+    @Field()
+    {{/withgraphql}}
+	@Column()
+	roles: string;
+}
