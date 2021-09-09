@@ -1,4 +1,3 @@
-import { doPackageJsonStuff } from "./doPackageJsonStuff";
 import fs from "fs-extra";
 import path from "path";
 import { DBConfig } from "./index";
@@ -8,12 +7,19 @@ export const copyConfigFiles = async (
 	baseoutput: string,
 	dbconfig: DBConfig,
 	withRest: boolean,
-	withGraphql: boolean
+	withGraphql: boolean,
+	projName: string
 ) => {
 	const baseConfigfilesPath = path.join(__dirname, "/files/configfiles");
 	await copyOrmconfigFile(baseoutput, dbconfig);
 	await copyTsConfigFile(baseoutput);
-	await doPackageJsonStuff(baseoutput, dbconfig.type, withRest, withGraphql);
+	await copyPackageJsonFile(
+		baseoutput,
+		dbconfig.type,
+		withRest,
+		withGraphql,
+		projName
+	);
 	await fs.copyFile(
 		path.join(baseConfigfilesPath, "/Dockerfile"),
 		path.join(baseoutput, "/Dockerfile")
@@ -45,5 +51,36 @@ const copyTsConfigFile = (outputPath: string) => {
 	return fs.copyFile(
 		path.join(__dirname, "/files/configfiles/typescript.json"),
 		path.join(outputPath, "/tsconfig.json")
+	);
+};
+
+const copyPackageJsonFile = async (
+	outputPath: string,
+	dbtype: string,
+	withRest: boolean,
+	withGraphql: boolean,
+	projName: string
+) => {
+	const databaseMap: Record<string, string> = {
+		postgres: "pg",
+		mysql: "mysql",
+		mariadb: "mysql",
+		sqlite: "sqlite3",
+		mssql: "mssql",
+		oracle: "oracledb",
+	};
+	const database = databaseMap[dbtype];
+	if (!database) throw new Error("unknown database type");
+
+	await renderCopy(
+		path.join(__dirname, "/files/configfiles/package.template"),
+		{
+			database,
+			withRest,
+			withGraphql,
+			projName,
+		},
+		path.join(outputPath, "/package.json"),
+		"json"
 	);
 };

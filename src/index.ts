@@ -29,7 +29,13 @@ const main = async () => {
 	const { withGraphql, withRest } = await questionApiTypes();
 
 	const dbconfig: DBConfig = await questionAboutDatabase();
-	await copyConfigFiles(baseOutputPath, dbconfig, withRest, withGraphql);
+	await copyConfigFiles(
+		baseOutputPath,
+		dbconfig,
+		withRest,
+		withGraphql,
+		projectName
+	);
 	await copyCommonFiles(baseOutputPath, withGraphql, withRest);
 	if (withGraphql) await copyGraphqlFiles(baseOutputPath);
 	if (withRest) await copyRestFiles(baseOutputPath);

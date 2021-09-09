@@ -31,9 +31,10 @@ export const questionAboutDatabase = async () => {
 		"postgres"
 	);
 	const { databasePass } = await questionInput(
-		"databsePass",
+		"databasePass",
 		"database password"
 	);
+
 	return {
 		type: databaseType as string,
 		host: databaseHost as string,
