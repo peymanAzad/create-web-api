@@ -1,6 +1,6 @@
 {
 	"name": "create-web-api",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "backend graphql/REST api generator using typeorm, apollo, express, type-graphql with jwt auth",
 	"main": "src/index.js",
 	"author": "peymanAzad",
