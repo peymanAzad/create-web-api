@@ -1,12 +1,9 @@
-import path from "path";
-import fs, { copy, ensureDir } from "fs-extra";
-import { renderCopy } from "./renderCopy";
+const fs = require("fs-extra");
+const path = require("path");
+const { renderCopy } = require("./renderCopy");
+const { ensureDir, copy } = fs;
 
-export const copyCommonFiles = async (
-	outputPath: string,
-	withGraphql: boolean,
-	withRest: boolean
-) => {
+const copyCommonFiles = async (outputPath, withGraphql, withRest) => {
 	const filesPath = path.join(__dirname, "/files");
 	await ensureDir(path.join(outputPath, "/src"));
 	await ensureDir(path.join(outputPath, "/src/entities"));
@@ -55,3 +52,4 @@ export const copyCommonFiles = async (
 		path.join(outputPath, "/src/host/auth")
 	);
 };
+exports.copyCommonFiles = copyCommonFiles;

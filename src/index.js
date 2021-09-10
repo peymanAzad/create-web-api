@@ -1,20 +1,11 @@
-import { questionAboutDatabase } from "./questionAboutDatabase";
-import inq from "inquirer";
-import fs, { copy } from "fs-extra";
-import path from "path";
-import { assert } from "console";
-import { questionInput } from "./questionInput";
-import { copyCommonFiles } from "./copyCommonfiles";
-import { copyConfigFiles } from "./copyConfigFiles";
-
-export interface DBConfig {
-	type: string;
-	host: string;
-	port: string;
-	database: string;
-	username: string;
-	password: string;
-}
+const { questionAboutDatabase } = require("./questionAboutDatabase");
+const inq = require("inquirer");
+const fs = require("fs-extra");
+const path = require("path");
+const { assert } = require("console");
+const { questionInput } = require("./questionInput");
+const { copyCommonFiles } = require("./copyCommonfiles");
+const { copyConfigFiles } = require("./copyConfigFiles");
 
 const main = async () => {
 	const projectName = process.argv[2]
@@ -24,7 +15,7 @@ const main = async () => {
 	const baseOutputPath = path.join(process.cwd(), "/" + projectName);
 
 	const { withGraphql, withRest } = await questionApiTypes();
-	const dbconfig: DBConfig = await questionAboutDatabase();
+	const dbconfig = await questionAboutDatabase();
 
 	await fs.ensureDir(baseOutputPath);
 
@@ -46,11 +37,11 @@ const questionProjectName = async () => {
 		"project name?",
 		"my-api"
 	);
-	return projectName as string;
+	return projectName;
 };
 
 const questionApiTypes = async () => {
-	const { apitypes }: { apitypes: string[] } = await inq.prompt({
+	const { apitypes } = await inq.prompt({
 		type: "checkbox",
 		message: "select APIs you need",
 		name: "apitypes",
@@ -62,18 +53,18 @@ const questionApiTypes = async () => {
 	};
 };
 
-const copyGraphqlFiles = async (baseOutputPath: string) => {
+const copyGraphqlFiles = async (baseOutputPath) => {
 	const filesPath = path.join(__dirname, "/files/src/host/graphql");
 	const outputPath = path.join(baseOutputPath, "/src/host/graphql");
 
-	await copy(filesPath, outputPath);
+	await fs.copy(filesPath, outputPath);
 };
 
-const copyRestFiles = async (baseOutputPath: string) => {
+const copyRestFiles = async (baseOutputPath) => {
 	const filesPath = path.join(__dirname, "/files/src/host/restApi");
 	const outputPath = path.join(baseOutputPath, "/src/host/restApi");
 
-	await copy(filesPath, outputPath);
+	await fs.copy(filesPath, outputPath);
 };
 
 main();

@@ -1,14 +1,13 @@
-import fs from "fs-extra";
-import path from "path";
-import { DBConfig } from "./index";
-import { renderCopy } from "./renderCopy";
+const fs = require("fs-extra");
+const path = require("path");
+const { renderCopy } = require("./renderCopy");
 
-export const copyConfigFiles = async (
-	baseoutput: string,
-	dbconfig: DBConfig,
-	withRest: boolean,
-	withGraphql: boolean,
-	projName: string
+const copyConfigFiles = async (
+	baseoutput,
+	dbconfig,
+	withRest,
+	withGraphql,
+	projName
 ) => {
 	const baseConfigfilesPath = path.join(__dirname, "/files/configfiles");
 	await copyOrmconfigFile(baseoutput, dbconfig);
@@ -38,7 +37,7 @@ export const copyConfigFiles = async (
 	);
 };
 
-const copyOrmconfigFile = (outputPath: string, dbconfig: DBConfig) => {
+const copyOrmconfigFile = (outputPath, dbconfig) => {
 	return renderCopy(
 		path.join(__dirname, "/files/configfiles/ormconfig.template"),
 		dbconfig,
@@ -46,7 +45,7 @@ const copyOrmconfigFile = (outputPath: string, dbconfig: DBConfig) => {
 	);
 };
 
-const copyTsConfigFile = (outputPath: string) => {
+const copyTsConfigFile = (outputPath) => {
 	return fs.copyFile(
 		path.join(__dirname, "/files/configfiles/typescript.json"),
 		path.join(outputPath, "/tsconfig.json")
@@ -54,13 +53,13 @@ const copyTsConfigFile = (outputPath: string) => {
 };
 
 const copyPackageJsonFile = async (
-	outputPath: string,
-	dbtype: string,
-	withRest: boolean,
-	withGraphql: boolean,
-	projName: string
+	outputPath,
+	dbtype,
+	withRest,
+	withGraphql,
+	projName
 ) => {
-	const databaseMap: Record<string, string> = {
+	const databaseMap = {
 		postgres: "pg",
 		mysql: "mysql",
 		mariadb: "mysql",
@@ -82,3 +81,4 @@ const copyPackageJsonFile = async (
 		path.join(outputPath, "/package.json")
 	);
 };
+exports.copyConfigFiles = copyConfigFiles;

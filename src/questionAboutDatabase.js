@@ -1,7 +1,7 @@
-import inq from "inquirer";
-import { questionInput } from "./questionInput";
+const inq = require("inquirer");
+const { questionInput } = require("./questionInput");
 
-export const questionAboutDatabase = async () => {
+const questionAboutDatabase = async () => {
 	const { databaseType } = await inq.prompt({
 		type: "list",
 		message: "pick your database type",
@@ -36,11 +36,12 @@ export const questionAboutDatabase = async () => {
 	);
 
 	return {
-		type: databaseType as string,
-		host: databaseHost as string,
-		port: databasePort as string,
-		database: databaseName as string,
-		username: databaseUser as string,
-		password: databasePass as string,
+		type: databaseType,
+		host: databaseHost,
+		port: databasePort,
+		database: databaseName,
+		username: databaseUser,
+		password: databasePass,
 	};
 };
+exports.questionAboutDatabase = questionAboutDatabase;
