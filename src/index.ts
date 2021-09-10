@@ -24,11 +24,12 @@ const main = async () => {
 		: await questionProjectName();
 	assert(projectName, "project name is not specified");
 	const baseOutputPath = path.join(process.cwd(), "/" + projectName);
-	await fs.ensureDir(baseOutputPath);
 
 	const { withGraphql, withRest } = await questionApiTypes();
-
 	const dbconfig: DBConfig = await questionAboutDatabase();
+
+	await fs.ensureDir(baseOutputPath);
+
 	await copyConfigFiles(
 		baseOutputPath,
 		dbconfig,
