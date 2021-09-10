@@ -24,15 +24,15 @@ const copyConfigFiles = async (
 		path.join(baseoutput, "/Dockerfile")
 	);
 	await fs.copyFile(
-		path.join(baseConfigfilesPath, "/.gitignore"),
+		path.join(baseConfigfilesPath, "/gitignore"),
 		path.join(baseoutput, "/.gitignore")
 	);
 	await fs.copyFile(
-		path.join(baseConfigfilesPath, "/.env"),
+		path.join(baseConfigfilesPath, "/env"),
 		path.join(baseoutput, "/.env")
 	);
 	await fs.copyFile(
-		path.join(baseConfigfilesPath, "/.dockerignore"),
+		path.join(baseConfigfilesPath, "/dockerignore"),
 		path.join(baseoutput, "/.dockerignore")
 	);
 };
