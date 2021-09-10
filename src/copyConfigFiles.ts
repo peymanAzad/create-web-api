@@ -42,8 +42,7 @@ const copyOrmconfigFile = (outputPath: string, dbconfig: DBConfig) => {
 	return renderCopy(
 		path.join(__dirname, "/files/configfiles/ormconfig.template"),
 		dbconfig,
-		path.join(outputPath, "/ormconfig.json"),
-		"json"
+		path.join(outputPath, "/ormconfig.json")
 	);
 };
 
@@ -80,7 +79,6 @@ const copyPackageJsonFile = async (
 			withGraphql,
 			projName,
 		},
-		path.join(outputPath, "/package.json"),
-		"json"
+		path.join(outputPath, "/package.json")
 	);
 };

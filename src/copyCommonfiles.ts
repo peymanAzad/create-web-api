@@ -1,7 +1,6 @@
 import path from "path";
-import fs, { ensureDir } from "fs-extra";
+import fs, { copy, ensureDir } from "fs-extra";
 import { renderCopy } from "./renderCopy";
-import { copyDirWithFiles } from "./copyDirWithFiles";
 
 export const copyCommonFiles = async (
 	outputPath: string,
@@ -17,8 +16,7 @@ export const copyCommonFiles = async (
 		{
 			withgraphql: withGraphql,
 		},
-		path.join(outputPath, "/src/entities/User.ts"),
-		"typescript"
+		path.join(outputPath, "/src/entities/User.ts")
 	);
 
 	await fs.copyFile(
@@ -29,24 +27,19 @@ export const copyCommonFiles = async (
 	await ensureDir(path.join(outputPath, "/src/dataAccess"));
 	await ensureDir(path.join(outputPath, "/src/dataAccess/migrations"));
 
-	await copyDirWithFiles(
+	await copy(
 		path.join(filesPath, "/src/dataAccess/repositories"),
-		path.join(outputPath, "/src/dataAccess/repositories"),
-		"userRepo.ts"
+		path.join(outputPath, "/src/dataAccess/repositories")
 	);
 
-	await copyDirWithFiles(
+	await copy(
 		path.join(filesPath, "/src/services"),
-		path.join(outputPath, "/src/services"),
-		"authService.ts"
+		path.join(outputPath, "/src/services")
 	);
 
-	await ensureDir(path.join(outputPath, "/src/services.contracts"));
-	await copyDirWithFiles(
-		path.join(filesPath, "/src/services.contracts/auth"),
-		path.join(outputPath, "/src/services.contracts/auth"),
-		"userType.ts",
-		"IAuthService.ts"
+	await copy(
+		path.join(filesPath, "/src/services.contracts"),
+		path.join(outputPath, "/src/services.contracts")
 	);
 
 	await ensureDir(path.join(outputPath, "/src/host"));
@@ -54,17 +47,11 @@ export const copyCommonFiles = async (
 	await renderCopy(
 		path.join(filesPath, "/src/host/app.template"),
 		{ withGraphql, withRest },
-		path.join(outputPath, appHost),
-		"typescript"
+		path.join(outputPath, appHost)
 	);
 
-	await copyDirWithFiles(
+	await copy(
 		path.join(filesPath, "/src/host/auth"),
-		path.join(outputPath, "/src/host/auth"),
-		"authConfig.ts",
-		"authController.ts",
-		"createAccessToken.ts",
-		"sendRefreshToken.ts",
-		"index.ts"
+		path.join(outputPath, "/src/host/auth")
 	);
 };

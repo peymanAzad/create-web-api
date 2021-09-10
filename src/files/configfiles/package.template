@@ -29,7 +29,7 @@
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"reflect-metadata": "^0.1.13",
-		"typeorm": "^0.2.37",
+		"typeorm": "^0.2.37"
 	},
 	"devDependencies": {
 		"@types/cookie-parser": "^1.4.2",

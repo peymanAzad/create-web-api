@@ -1,12 +1,10 @@
 import { questionAboutDatabase } from "./questionAboutDatabase";
 import inq from "inquirer";
-import fs from "fs-extra";
+import fs, { copy } from "fs-extra";
 import path from "path";
 import { assert } from "console";
 import { questionInput } from "./questionInput";
 import { copyCommonFiles } from "./copyCommonfiles";
-import { copyGraphqlFiles } from "./copyGraphqlFiles";
-import { copyRestFiles } from "./copyRestFiles";
 import { copyConfigFiles } from "./copyConfigFiles";
 
 export interface DBConfig {
@@ -62,6 +60,20 @@ const questionApiTypes = async () => {
 		withRest: apitypes.includes("REST"),
 		withGraphql: apitypes.includes("GraphQL"),
 	};
+};
+
+const copyGraphqlFiles = async (baseOutputPath: string) => {
+	const filesPath = path.join(__dirname, "/files/src/host/graphql");
+	const outputPath = path.join(baseOutputPath, "/src/host/graphql");
+
+	await copy(filesPath, outputPath);
+};
+
+const copyRestFiles = async (baseOutputPath: string) => {
+	const filesPath = path.join(__dirname, "/files/src/host/restApi");
+	const outputPath = path.join(baseOutputPath, "/src/host/restApi");
+
+	await copy(filesPath, outputPath);
 };
 
 main();
