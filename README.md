@@ -5,7 +5,8 @@ typescript REST/GraphqL api code generator with JWT authentication
 ```
 npx create-web-api my-api
 cd my-api
-npm start
+yarn build
+yarn start
 ```
 
 ## Example
