@@ -1,10 +1,14 @@
 {
-	"name": "backgen",
+	"name": "create-web-api",
 	"version": "1.0.0",
-	"description": "backend graphql/REST api generator using typeorm, apollo, express, type-graphql with jwt/cookie-session(redis) auth",
-	"main": "index.js",
+	"description": "backend graphql/REST api generator using typeorm, apollo, express, type-graphql with jwt auth",
+	"main": "src/index.js",
 	"author": "peymanAzad",
 	"license": "MIT",
+	"bin": {
+		"create-web-api": "./src/index.js"
+	},
+	"files": ["src"],
 	"scripts": {
 		"start": "node src/index.js"
 	},

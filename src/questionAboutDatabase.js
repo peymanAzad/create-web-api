@@ -1,7 +1,7 @@
 const inq = require("inquirer");
 const { questionInput } = require("./questionInput");
 
-const questionAboutDatabase = async () => {
+const questionAboutDatabase = async (projName) => {
 	const { databaseType } = await inq.prompt({
 		type: "list",
 		message: "pick your database type",
@@ -23,12 +23,13 @@ const questionAboutDatabase = async () => {
 	});
 	const { databaseName } = await questionInput(
 		"databaseName",
-		"database name?"
+		"database name?",
+		projName
 	);
 	const { databaseUser } = await questionInput(
 		"databaseUser",
 		"database username?",
-		"postgres"
+		databaseType
 	);
 	const { databasePass } = await questionInput(
 		"databasePass",

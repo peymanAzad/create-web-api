@@ -1,8 +1,9 @@
-const { questionAboutDatabase } = require("./questionAboutDatabase");
+#!/usr/bin/env node
 const inq = require("inquirer");
 const fs = require("fs-extra");
 const path = require("path");
 const { assert } = require("console");
+const { questionAboutDatabase } = require("./questionAboutDatabase");
 const { questionInput } = require("./questionInput");
 const { copyCommonFiles } = require("./copyCommonfiles");
 const { copyConfigFiles } = require("./copyConfigFiles");
@@ -15,7 +16,7 @@ const main = async () => {
 	const baseOutputPath = path.join(process.cwd(), "/" + projectName);
 
 	const { withGraphql, withRest } = await questionApiTypes();
-	const dbconfig = await questionAboutDatabase();
+	const dbconfig = await questionAboutDatabase(projectName);
 
 	await fs.ensureDir(baseOutputPath);
 
