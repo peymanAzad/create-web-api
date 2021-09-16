@@ -1,6 +1,6 @@
 {
 	"name": "create-web-api",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Build REST and GraphQL APIs by running one command",
 	"main": "src/index.js",
 	"author": "peymanAzad",
