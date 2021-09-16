@@ -1,6 +1,14 @@
 const inq = require("inquirer");
 const { questionInput } = require("./questionInput");
 
+const dbDefaultPorts = {
+	postgres: 5432,
+	mysql: 3306,
+	mariadb: 3306,
+	mssql: 1433,
+	oracle: 1521,
+};
+
 const questionAboutDatabase = async (projName) => {
 	const { databaseType } = await inq.prompt({
 		type: "list",
@@ -8,6 +16,17 @@ const questionAboutDatabase = async (projName) => {
 		name: "databaseType",
 		choices: ["postgres", "mysql", "mariadb", "sqlite", "mssql", "oracle"],
 	});
+
+	const { databaseName } = await questionInput(
+		"databaseName",
+		databaseType !== "sqlite" ? "database name?" : "database path?",
+		databaseType !== "sqlite" ? projName : `./${projName}.sql`
+	);
+	if (databaseType === "sqlite")
+		return {
+			type: databaseType,
+			database: databaseName,
+		};
 
 	const { databaseHost } = await questionInput(
 		"databaseHost",
@@ -19,13 +38,9 @@ const questionAboutDatabase = async (projName) => {
 		type: "number",
 		name: "databasePort",
 		message: "database port",
-		default: 5432,
+		default: dbDefaultPorts[databaseType],
 	});
-	const { databaseName } = await questionInput(
-		"databaseName",
-		"database name?",
-		projName
-	);
+
 	const { databaseUser } = await questionInput(
 		"databaseUser",
 		"database username?",

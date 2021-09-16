@@ -1,10 +1,12 @@
 {
 	"type": "{{type}}",
+	"database": "{{{database}}}",
+	{{#isNotSqlite}}
 	"host": "{{host}}",
 	"port": {{port}},
 	"username": "{{username}}",
 	"password": "{{password}}",
-	"database": "{{database}}",
+	{{/isNotSqlite}}
 	"synchronize": false,
 	"logging": true,
 	"entities": ["dist/entities/**/*.js"],

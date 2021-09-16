@@ -40,7 +40,7 @@ const copyConfigFiles = async (
 const copyOrmconfigFile = (outputPath, dbconfig) => {
 	return renderCopy(
 		path.join(__dirname, "/files/configfiles/ormconfig.template"),
-		dbconfig,
+		{ ...dbconfig, isNotSqlite: dbconfig.type !== "sqlite" },
 		path.join(outputPath, "/ormconfig.json")
 	);
 };
