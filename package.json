@@ -1,7 +1,7 @@
 {
 	"name": "create-web-api",
 	"version": "1.0.3",
-	"description": "backend graphql/REST api generator using typeorm, apollo, express, type-graphql with jwt auth",
+	"description": "Build REST and GraphQL APIs by running one command",
 	"main": "src/index.js",
 	"author": "peymanAzad",
 	"license": "MIT",
@@ -22,6 +22,20 @@
 	"scripts": {
 		"start": "node src/index.js"
 	},
+	"keywords": [
+		"node",
+		"node.js",
+		"typescript",
+		"boilerplate",
+		"generator",
+		"api",
+		"express",
+		"rest",
+		"graphql",
+		"typeorm",
+		"docker",
+		"jwt"
+	],
 	"devDependencies": {},
 	"dependencies": {
 		"chalk": "^4.1.2",
